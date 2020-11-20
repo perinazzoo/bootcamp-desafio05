@@ -17,6 +17,8 @@ class CreateTransactionService {
   public execute({ title, type, value }: Request): Transaction {
     const balance = this.transactionsRepository.getBalance();
 
+    console.log(balance);
+
     if (type === 'outcome' && balance.total < value) {
       throw Error('You cannot expend more money than you have.');
     }
