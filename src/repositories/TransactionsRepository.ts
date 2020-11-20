@@ -23,9 +23,23 @@ class TransactionsRepository {
     return this.transactions;
   }
 
-  // public getBalance(): Balance {
-  //   // TODO
-  // }
+  public getBalance(): Balance {
+    const income = this.transactions.reduce((acc, transaction) => {
+      return transaction.type === 'income' ? acc + transaction.value : acc;
+    }, 0);
+
+    const outcome = this.transactions.reduce((acc, transaction) => {
+      return transaction.type === 'outcome' ? acc + transaction.value : acc;
+    }, 0);
+
+    const total = income - outcome;
+
+    return {
+      income,
+      outcome,
+      total,
+    };
+  }
 
   public create({ title, type, value }: CreateTransaction): Transaction {
     const transaction = new Transaction({ title, type, value });

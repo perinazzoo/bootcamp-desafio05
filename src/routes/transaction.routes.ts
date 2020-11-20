@@ -11,7 +11,9 @@ transactionRouter.get('/', (req, res) => {
   try {
     const transactions = transactionsRepository.all();
 
-    return res.json(transactions);
+    const balance = transactionsRepository.getBalance();
+
+    return res.json({ transactions, balance });
   } catch (err) {
     return res.status(400).json({ error: err.message });
   }
